@@ -28,10 +28,10 @@ class TrojuhelnikovyResic:
         if vysledek not in self.povolene:
             raise ValueError(f"Zadaný výsledek výpočtu '{vysledek}' není mezi povolenými parametry")
         
-        for i in range(len(args)//2):
-            if not args[2*i] in self.povolene:
-                raise ValueError(f"Parametr '{args[i]}' není mezi povolenými")
-            if args[2*i+1] not in (0,1,2):
+        for parametr, poradi in batched(args, 2):
+            if not parametr in self.povolene:
+                raise ValueError(f"Parametr '{parametr}' není mezi povolenými parametry")
+            if poradi not in (0,1,2):
                 raise ValueError(f"Číslo následující po názvu parametru musí být v rozmezí 0-2")
             
         def wrapper(func):
