@@ -46,7 +46,8 @@ def sinova_veta1(alfa, d):
 
 @rs.rule("uhel", "strana", 0, "2r", 0)
 def sinova_veta2(a, d):
-    return asin(a/d)
+    alfa = asin(a/d)
+    return alfa, (180 - alfa) % 360
 
 @rs.rule("2r", "strana", 0, "uhel", 0)
 def sinova_veta3(a, alfa):
@@ -58,10 +59,14 @@ def sinova_veta3(a, alfa):
 
 
 
-rs.promene["strana"][2] = 3
-rs.promene["uhel"][1] = 90
-rs.promene["strana"][1] = 5
+rs.promene["uhel"][0] = 55
+rs.promene["strana"][0] = 6.1
+rs.promene["strana"][1] = 7.2
 
 runner.run()
 
-pprint(rs.promene)
+print("*************************************")
+print("*************************************")
+for resic in runner.resice:
+    print("*************************************")
+    pprint(resic.promene)

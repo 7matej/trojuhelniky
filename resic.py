@@ -1,6 +1,7 @@
 from collections import defaultdict
 from itertools import batched
 from enum import Enum
+from copy import deepcopy
 
 class SolverError(Exception):
     pass
@@ -98,8 +99,8 @@ class TrojuhelnikovyResic:
             self.stav = State.Failure
         else:
             if vysledek != "__condition":
-                if isinstance(vysledek_poradi, tuple):
-                    self.runner.duplicate(vysledek, vysledek_poradi, vypoctena_hodnota)
+                if isinstance(vypoctena_hodnota, tuple):
+                    self.runner.duplicate(self, vysledek, vysledek_poradi, vypoctena_hodnota)
                     vypoctena_hodnota = vypoctena_hodnota[0]
                 
                 self.promene[vysledek][vysledek_poradi] = vypoctena_hodnota
@@ -118,3 +119,10 @@ class TrojuhelnikovyResic:
             return True
         
         return isinstance(x, (int, float))
+    
+    def copy(self)->'TrojuhelnikovyResic':
+        novy = TrojuhelnikovyResic(self.povolene)
+        novy.pravidla = self.pravidla
+        novy.stav = self.stav
+        novy.promene = deepcopy(self.promene)
+        return novy
