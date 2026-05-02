@@ -81,12 +81,11 @@ def sinova_veta3(a, alfa):
 
 rs.promene["strana"][0] = 6.1
 rs.promene["strana"][1] = 7.1
-rs.promene["uhel"][1] = 30
+rs.promene["uhel"][0] = 30
 
 runner.run()
 
 print("*************************************")
-print("*************************************")
-for resic in runner.resice:
-    print("*************************************")
+for resic in runner.vysledky:
     pprint(resic.promene)
+print("*************************************")

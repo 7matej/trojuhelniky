@@ -12,6 +12,9 @@ class Runner:
 
     def run(self):
         self.spust_resic(self.resice[0])
+        
+        #odstranění chybných výsledků
+        self.vysledky = [resic for resic in self.resice if resic.stav == State.Success]
 
 
     def duplicate(self, spoustec : TrojuhelnikovyResic, vysledek, poradi, moznosti : tuple):

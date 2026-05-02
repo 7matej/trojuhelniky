@@ -50,6 +50,7 @@ class TrojuhelnikovyResic:
         
         while (self.stav != State.Failure):
             if not self.spust_pravidla():
+                self.stav = State.Success
                 break
         
         del self.promene["__condition"]
