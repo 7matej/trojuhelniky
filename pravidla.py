@@ -69,9 +69,19 @@ def sinova_veta3(a, alfa):
 
 
 
-rs.promene["uhel"][0] = 55
+#rs.promene["uhel"][0] = 55
+#rs.promene["strana"][0] = 6.1
+#rs.promene["strana"][1] = 7.2
+
+#rs.promene["strana"][0] = 4.3
+#rs.promene["strana"][1] = 3.1
+#rs.promene["uhel"][2] = 57 + 31/60
+
+#rs.promene["strana"] = [4, 5, 3]
+
 rs.promene["strana"][0] = 6.1
-rs.promene["strana"][1] = 7.2
+rs.promene["strana"][1] = 7.1
+rs.promene["uhel"][1] = 30
 
 runner.run()
 
