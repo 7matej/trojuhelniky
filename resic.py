@@ -43,10 +43,10 @@ class TrojuhelnikovyResic:
             if poradi not in (0,1,2):
                 raise ValueError(f"Číslo následující po názvu parametru musí být v rozmezí 0-2")
             
-        def wrapper(func):
+        def dekorator(func):
             self.pravidla.append((func, vysledek, args))
             return func
-        return wrapper
+        return dekorator
     
     def cond(self, *parametry):
         return self.rule("__condition", *parametry)
