@@ -39,6 +39,16 @@ def r(r):
     return r
 
 
+#kosinová věta
+@rs.rule("strana", "strana", 1, "strana", 2, "uhel", 0)
+def kosinova_veta1(b, c, alfa):
+    return b**2 + c**2 - 2*b*c*cos(alfa)
+
+@rs.rule("uhel", "strana", 0, "strana", 1, "strana", 2)
+def kosinova_veta2(a, b, c):
+    return acos((b**2 + c**2 - a**2)/(2*b*c))
+
+
 #sinová věta
 @rs.rule("strana", "uhel", 0, "2r", 0)
 def sinova_veta1(alfa, d):
