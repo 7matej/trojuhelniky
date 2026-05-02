@@ -6,7 +6,7 @@ from pprint import pprint
 rs = TrojuhelnikovyResic(set((
     "strana",    #strana
     "uhel",    #úhel
-    "2r"    #průměr kružnice opsané
+    "r"    #poloměr kružnice opsané
 )))
 runner = Runner(rs)
 
@@ -34,7 +34,7 @@ def stoosumdesat(alfa, beta):
 
 
 #poloměr kruž. opsané
-@rs.rule("2r", "2r", 1)
+@rs.rule("r", "r", 1)
 def r(r):
     return r
 
@@ -50,18 +50,18 @@ def kosinova_veta2(a, b, c):
 
 
 #sinová věta
-@rs.rule("strana", "uhel", 0, "2r", 0)
-def sinova_veta1(alfa, d):
-    return sin(alfa) * d
+@rs.rule("strana", "uhel", 0, "r", 0)
+def sinova_veta1(alfa, r):
+    return sin(alfa) * 2*r
 
-@rs.rule("uhel", "strana", 0, "2r", 0)
-def sinova_veta2(a, d):
-    alfa = asin(a/d)
+@rs.rule("uhel", "strana", 0, "r", 0)
+def sinova_veta2(a, r):
+    alfa = asin(a/(2*r))
     return alfa, (180 - alfa) % 360
 
-@rs.rule("2r", "strana", 0, "uhel", 0)
+@rs.rule("r", "strana", 0, "uhel", 0)
 def sinova_veta3(a, alfa):
-    return a / sin(alfa)
+    return (a / sin(alfa))/2
 
 
 
