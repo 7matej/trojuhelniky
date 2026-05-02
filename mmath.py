@@ -11,3 +11,5 @@ def asin(x):
 
 def acos(x):
     return m.degrees(m.asin(x)) % 360
+
+sqrt = m.sqrt
