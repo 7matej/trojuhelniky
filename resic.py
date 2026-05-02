@@ -20,6 +20,14 @@ class TrojuhelnikovyResic:
         self.pravidla=[]
 
 
+    def copy(self)->'TrojuhelnikovyResic':
+        novy = TrojuhelnikovyResic(self.povolene)
+        novy.pravidla = self.pravidla
+        novy.stav = self.stav
+        novy.promene = deepcopy(self.promene)
+        return novy
+
+
     def rule(self, vysledek, *parametry):
         args=parametry
 
@@ -85,7 +93,7 @@ class TrojuhelnikovyResic:
                 if not vypoctena_hodnota:
                     raise SolverError("Podmínka není splněna.")
 
-            elif not TrojuhelnikovyResic.je_cislo(vypoctena_hodnota):
+            elif not je_cislo(vypoctena_hodnota):
                 raise SolverError(f"Hodnota '{vypoctena_hodnota}' vrácená funkcí není číslo,"
                                   " nebo neprázdná n-tice čísel.")
         
@@ -103,6 +111,7 @@ class TrojuhelnikovyResic:
         else:
             if vysledek != "__condition":
                 if isinstance(vypoctena_hodnota, tuple):
+                    vypoctena_hodnota = odstran_duplicity(vypoctena_hodnota)
                     self.runner.duplicate(self, vysledek, vysledek_poradi, vypoctena_hodnota)
                     vypoctena_hodnota = vypoctena_hodnota[0]
                 
@@ -111,21 +120,21 @@ class TrojuhelnikovyResic:
             
         return False
 
-    @staticmethod
-    def je_cislo(x):
-        if isinstance(x, tuple):
-            if x == ():
-                return False
-            for prvek in x:
-                if not isinstance(prvek, (int, float)):
-                    return False
-            return True
-        
-        return isinstance(x, (int, float))
     
-    def copy(self)->'TrojuhelnikovyResic':
-        novy = TrojuhelnikovyResic(self.povolene)
-        novy.pravidla = self.pravidla
-        novy.stav = self.stav
-        novy.promene = deepcopy(self.promene)
-        return novy
+
+
+
+#pomocné funkce
+def je_cislo(x):
+    if isinstance(x, tuple):
+        if x == ():
+            return False
+        for prvek in x:
+            if not isinstance(prvek, (int, float)):
+                return False
+        return True
+    
+    return isinstance(x, (int, float))
+
+def odstran_duplicity(puvodni : tuple):
+    return tuple(set(puvodni))
