@@ -44,7 +44,8 @@ class TrojuhelnikovyResic:
         return self.rule("__condition", *parametry)
 
 
-    def run(self, runner):
+    def run(self, runner, id):
+        self.id = id
         self.runner = runner
         
         while (self.stav != State.Failure):
@@ -90,6 +91,7 @@ class TrojuhelnikovyResic:
         except Exception as e:
             print("")
             print("---------------------ERROR-------------------------------")
+            print(f"Řešič id={self.id}")
             print(f"Funkce '{func.__name__}' při výpočtu proměnné '{vysledek}' - '{poradi}':")
             print(repr(e))
             print("Stav proměnných v době chyby:")
