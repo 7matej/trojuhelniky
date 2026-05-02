@@ -10,6 +10,6 @@ def asin(x):
     return m.degrees(m.asin(x)) % 360
 
 def acos(x):
-    return m.degrees(m.asin(x)) % 360
+    return m.degrees(m.acos(x)) % 360
 
 sqrt = m.sqrt
