@@ -32,7 +32,7 @@ class TrojuhelnikovyResic:
         args=parametry
 
         if len(args) % 2 != 0:
-            raise ValueError("počet parametrů metody rule musí být sudý")
+            raise ValueError("počet parametrů metody rule musí být lichý")
         
         if vysledek not in self.povolene:
             raise ValueError(f"Zadaný výsledek výpočtu '{vysledek}' není mezi povolenými parametry")
