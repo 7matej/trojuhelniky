@@ -22,6 +22,10 @@ def podm2(alfa):
 def trojuhelnikova_nerovnost(a, b, c):
     return a < b + c
 
+rs.cond("r", 0)
+def podm4(r):
+    return r > 0
+
 
 
 #součet úhlů v trojúhelníku
