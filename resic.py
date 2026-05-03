@@ -10,6 +10,7 @@ class State(Enum):
     Success = 0
     Failure = 1
     Unknown = 2
+    Unsolved = 3
 
 class TrojuhelnikovyResic:
     povolene = {"__condition"}
@@ -59,7 +60,10 @@ class TrojuhelnikovyResic:
         
         while (self.stav != State.Failure):
             if not self.spust_pravidla():
-                self.stav = State.Success
+                if self.zkontroluj_uplnost():
+                    self.stav = State.Success
+                else:
+                    self.stav = State.Unsolved
                 break
         
         del self.promene["__condition"]
@@ -120,6 +124,18 @@ class TrojuhelnikovyResic:
                 return True
             
         return False
+    
+    def zkontroluj_uplnost(self) -> bool:
+        for promena in self.povolene:
+            if not self.je_vyreseno(self.promene[promena]):
+                return False
+        return True
+
+    def je_vyreseno(lst : list) -> bool:
+        for i in lst:
+            if i is None:
+                return False
+        return True
 
     
 
