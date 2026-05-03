@@ -54,7 +54,7 @@ class Formular:
                     return
                 
                 pocet += 1
-                resic.promene[pole["promena"]][pole["pozice"]] = hodnota
+                resic.set(pole["promena"], pole["pozice"], hodnota)
 
         if pocet != 3:
             self.hlaska = "Můsíte vyplnit právě tři prvky trojúhelníku."

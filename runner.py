@@ -31,7 +31,7 @@ class Runner:
     def duplicate(self, spoustec : TrojuhelnikovyResic, vysledek, poradi, moznosti : tuple):
         for moznost in moznosti[1:]:
             novy = spoustec.copy()
-            novy.promene[vysledek][poradi] = moznost
+            novy.set(vysledek, poradi, moznost)
             self.resice.append(novy)
             self.spust_resic(novy)
 

@@ -28,6 +28,11 @@ class TrojuhelnikovyResic:
         novy.stav = self.stav
         novy.promene = deepcopy(self.promene)
         return novy
+    
+    def set(self, promena, poradi, hodnota):
+        self.promene[promena][poradi] = hodnota
+    def get(self, promena, poradi):
+        return self.promene[promena][poradi]
 
 
     def rule(self, vysledek, *parametry):
