@@ -9,6 +9,11 @@
 	<h1>Kalkulačka trojúhelníků</h1>
     <p>Zadejte tři prvky trojúhelníku a spusťte výpočet:</p>
 
+    <form method="post">
+        {% for pole in polozky %}
+        <input type="number" name="{{ pole.name }}" placeholder="{{ pole.nazev }}">
+        {% endfor %}
+    </form>
 
 </body>
 </html>
