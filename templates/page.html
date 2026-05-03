@@ -12,7 +12,7 @@
     <form method="post">
         {% for pole in formular.polozky %}
             <label for="{{ pole.name }}">{{ pole.nazev + ":" }}</label>
-            <input type="number" name="{{ pole.name }}" id="{{ pole.name }}"><br>
+            <input type="number" name="{{ pole.name }}" id="{{ pole.name }}" value="{{ pole.hodnota }}"><br>
         {% endfor %}
         <input type="submit" value="vypočítat">
     </form>

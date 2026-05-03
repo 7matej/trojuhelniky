@@ -16,7 +16,7 @@ def kalkulacka_trojuhelniku():
     }
     )
     if request.method == "POST":
-        formular.zpracuj_pozadavky(request.form)
+        formular.zpracuj_hodnoty(request.form)
     
     return render_template("page.html", formular=formular)
 

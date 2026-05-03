@@ -1,9 +1,7 @@
-from collections import namedtuple
-
 import pravidla
 from resic import TrojuhelnikovyResic
+from runner import Runner
 
-Pole = namedtuple("Pole", ["promena", "pozice", "nazev", "name"])
 
 class Formular:
     def __init__(self, polozky):
@@ -24,12 +22,37 @@ class Formular:
         assert(isinstance(promena, str))
         assert(isinstance(nazev, str))
         
-        self.polozky.append(Pole(
-            promena,
-            pozice,
-            nazev,
-            promena + str(pozice)
-        ))
+        self.polozky.append({
+            "promena": promena,
+            "pozice" : pozice,
+            "nazev" : nazev,
+            "name" : promena + str(pozice),
+            "hodnota" : "",
+        })
 
-    def zpracuj_pozadavky(self, zdroj):
-        pass
+    def zpracuj_hodnoty(self, zdroj):
+        self.vysledky = []
+        self.hlaska = None
+
+        resic = TrojuhelnikovyResic()
+        pocet = 0
+
+        for pole in self.polozky:
+            obsah = zdroj.get(pole["name"])
+            
+            if obsah not in (None, ""):
+                pole["hodnota"] = obsah
+                try:
+                    hodnota = float(obsah)
+                except ValueError:
+                    self.hlaska = f"Zadanou hodnotu '{obsah}' se nepodařilo převést na číslo."
+                    return
+                
+                pocet += 1
+                resic.promene[pole["promena"]][pole["pozice"]] = hodnota
+
+        if pocet != 3:
+            self.hlaska = "Můsíte vyplnit právě tři prvky trojúhelníku."
+            return
+        
+        runner = Runner(resic)
