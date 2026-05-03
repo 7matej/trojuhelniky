@@ -9,6 +9,10 @@ class Formular:
         self.zarad(polozky)
         print(self.polozky)
 
+        self.vysledky = []
+        self.pocet_reseni = 0
+        self.hlaska = None
+
     def zarad(self, polozky : dict):
         for promena, nazvy in polozky.items():
             if isinstance(nazvy, tuple):
@@ -32,6 +36,7 @@ class Formular:
 
     def zpracuj_hodnoty(self, zdroj):
         self.vysledky = []
+        self.pocet_reseni = 0
         self.hlaska = None
 
         resic = TrojuhelnikovyResic()
@@ -59,17 +64,17 @@ class Formular:
         runner.run()
 
         self.vysledky = runner.vysledky
-        self.pocet_reseni = len(self.vysledky)
 
         match runner.stav:
             case State.Unsolved:
                 self.hlaska = "Trojúhelník se nepodařilo vyřešit."
-                self.vysledky = []; self.pocet_reseni = 0
+                self.vysledky = []
             
             case State.Failure:
                 self.hlaska = "Trojúhelník se zadanými prvky neexistuje."
             
             case State.Success:
+                self.pocet_reseni = len(self.vysledky)
                 self.hlaska = None
 
         
