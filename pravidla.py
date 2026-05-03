@@ -1,5 +1,4 @@
 from resic import TrojuhelnikovyResic
-from runner import Runner
 from mmath import *
 from pprint import pprint
 
@@ -8,7 +7,6 @@ rs = TrojuhelnikovyResic(set((
     "uhel",    #úhel
     "r"    #poloměr kružnice opsané
 )))
-runner = Runner(rs)
 
 
 #podmínky
@@ -68,6 +66,7 @@ def sinova_veta3(a, alfa):
 
 
 if __name__ == "__main__":
+    from runner import Runner
 
     #rs.promene["uhel"][0] = 55
     #rs.promene["strana"][0] = 6.1
@@ -79,9 +78,13 @@ if __name__ == "__main__":
 
     #rs.promene["strana"] = [4, 5, 3]
 
-    rs.promene["strana"][0] = 6.1
-    rs.promene["strana"][1] = 7.1
-    rs.promene["uhel"][0] = 30
+    x = TrojuhelnikovyResic()
+    print(x.pravidla)
+    runner = Runner(x)
+
+    x.promene["strana"][0] = 6.1
+    x.promene["strana"][1] = 7.1
+    x.promene["uhel"][0] = 30
 
     runner.run()
 

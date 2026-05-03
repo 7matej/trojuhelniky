@@ -12,17 +12,18 @@ class State(Enum):
     Unknown = 2
 
 class TrojuhelnikovyResic:
-    def __init__(self, povolene_promene : set):
-        povolene_promene.add("__condition")
-        self.povolene = povolene_promene
+    povolene = {"__condition"}
+    pravidla = []
+    
+    def __init__(self, povolene_promene = None):
+        if povolene_promene:
+            self.povolene.update(povolene_promene)
         self.stav = State.Unknown
         self.promene=defaultdict(lambda:[None, None, None])
-        self.pravidla=[]
 
 
     def copy(self)->'TrojuhelnikovyResic':
         novy = TrojuhelnikovyResic(self.povolene)
-        novy.pravidla = self.pravidla
         novy.stav = self.stav
         novy.promene = deepcopy(self.promene)
         return novy
