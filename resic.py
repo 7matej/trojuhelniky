@@ -63,13 +63,16 @@ class TrojuhelnikovyResic:
         self.id = id
         self.runner = runner
         
-        while (self.stav != State.Failure):
-            if not self.spust_pravidla():
-                if self.zkontroluj_uplnost():
-                    self.stav = State.Success
-                else:
-                    self.stav = State.Unsolved
+        while (self.spust_pravidla()):
+            if self.stav == State.Failure:
                 break
+        
+        else:
+            if self.zkontroluj_uplnost():
+                self.stav = State.Success
+            else:
+                self.stav = State.Unsolved
+
         
         del self.promene["__condition"]
 
@@ -85,6 +88,7 @@ class TrojuhelnikovyResic:
                             
 
     def spust_pravidlo(self, func, vysledek, args, vysledek_poradi, smer):
+        #vrátí True, pokud se pravidlo spustilo a nejde o podmínku
         
         #načte argumenty
         arglist = []
@@ -127,16 +131,17 @@ class TrojuhelnikovyResic:
                 
                 self.promene[vysledek][vysledek_poradi] = vypoctena_hodnota
                 return True
+            return False
             
-        return False
+        return True
     
     def zkontroluj_uplnost(self) -> bool:
         for promena in self.povolene:
-            if not self.je_vyreseno(self.promene[promena]):
+            if not promena.startswith("__") and not self.je_vyreseno(self.promene[promena]):
                 return False
         return True
 
-    def je_vyreseno(lst : list) -> bool:
+    def je_vyreseno(self, lst : list) -> bool:
         for i in lst:
             if i is None:
                 return False

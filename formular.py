@@ -7,7 +7,6 @@ class Formular:
     def __init__(self, polozky):
         self.polozky = []
         self.zarad(polozky)
-        print(self.polozky)
 
         self.vysledky = []
         self.pocet_reseni = 0

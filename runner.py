@@ -12,6 +12,10 @@ class Runner:
 
     def run(self):
         self.spust_resic(self.resice[0])
+
+        #for resic in self.resice:
+        #    print(resic.stav)
+        #    print(resic.promene)
         
 
         #odstranění chybných výsledků
@@ -26,6 +30,8 @@ class Runner:
         for resic in self.resice:
             if resic.stav == State.Unsolved:
                 self.stav = State.Unsolved
+
+        #print(self.stav)
 
 
     def duplicate(self, spoustec : TrojuhelnikovyResic, vysledek, poradi, moznosti : tuple):
