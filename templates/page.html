@@ -10,7 +10,7 @@
     <p>Zadejte tři prvky trojúhelníku a spusťte výpočet:</p>
 
     <form method="post">
-        {% for pole in zobrazeni.polozky %}
+        {% for pole in formular.polozky %}
             <label for="{{ pole.name }}">{{ pole.nazev + ":" }}</label>
             <input type="number" name="{{ pole.name }}" id="{{ pole.name }}"><br>
         {% endfor %}

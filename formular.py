@@ -2,7 +2,7 @@ from collections import namedtuple
 
 Pole = namedtuple("Pole", ["promena", "pozice", "nazev", "name"])
 
-class Zobrazeni:
+class Formular:
     def __init__(self, polozky):
         self.polozky = []
         self.zarad(polozky)
@@ -27,11 +27,3 @@ class Zobrazeni:
             nazev,
             promena + str(pozice)
         ))
-
-zbr = Zobrazeni(
-    {
-        "strana" : ("a", "b", "c"),
-        "uhel" : ("α", "β", "γ"),
-        "r" : "r",
-    }
-)
