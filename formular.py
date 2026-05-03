@@ -1,5 +1,5 @@
 import pravidla
-from resic import TrojuhelnikovyResic
+from resic import TrojuhelnikovyResic, State
 from runner import Runner
 
 
@@ -56,3 +56,20 @@ class Formular:
             return
         
         runner = Runner(resic)
+        runner.run()
+
+        self.vysledky = runner.vysledky
+        self.pocet_reseni = len(self.vysledky)
+
+        match runner.stav:
+            case State.Unsolved:
+                self.hlaska = "Trojúhelník se nepodařilo vyřešit."
+                self.vysledky = []; self.pocet_reseni = 0
+            
+            case State.Failure:
+                self.hlaska = "Trojúhelník se zadanými prvky neexistuje."
+            
+            case State.Success:
+                self.hlaska = None
+
+        
