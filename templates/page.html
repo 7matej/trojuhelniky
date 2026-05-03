@@ -17,5 +17,18 @@
         <input type="submit" value="vypočítat">
     </form>
 
+    {% if formular.hlaska %}
+        <p>{{ formular.hlaska }}</p>
+    {% endif %}
+
+    {% for resic in formular.vysledky %}
+        <hr>
+        {% for pole in formular.polozky %}
+            <p>
+                <strong>{{ pole.nazev }}:</strong> {{ resic.get(pole.promena, pole.pozice) }}
+            </p>
+        {% endfor %}  
+    {% endfor %}
+
 </body>
 </html>
