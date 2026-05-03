@@ -1,5 +1,8 @@
 from collections import namedtuple
 
+import pravidla
+from resic import TrojuhelnikovyResic
+
 Pole = namedtuple("Pole", ["promena", "pozice", "nazev", "name"])
 
 class Formular:
@@ -27,3 +30,6 @@ class Formular:
             nazev,
             promena + str(pozice)
         ))
+
+    def zpracuj_pozadavky(self, zdroj):
+        pass
