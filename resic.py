@@ -137,7 +137,7 @@ class TrojuhelnikovyResic:
     
     def zkontroluj_uplnost(self) -> bool:
         for promena in self.povolene:
-            if not promena.startswith("__") and not self.je_vyreseno(self.promene[promena]):
+            if not promena.startswith("__") and not self.je_vyreseno(self.promene[promena]):      #__condition ignorováno
                 return False
         return True
 
