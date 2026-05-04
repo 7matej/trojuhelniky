@@ -13,6 +13,7 @@ class State(Enum):
     Failure = 1
     Unknown = 2
     Unsolved = 3
+    Ban = 4
 
 class TrojuhelnikovyResic:    
     def __init__(self, pravidla : Rule):
@@ -20,6 +21,13 @@ class TrojuhelnikovyResic:
         self.stav = State.Unknown
         self.promene=defaultdict(lambda:[None, None, None])
 
+    def reset(self, pravidla : Rule = None) -> Rule:
+        #! zachovává proměnné, vrací původní pravidla
+        self.stav = State.Unknown
+        puvodni = self.pravidla
+        if pravidla:
+            self.pravidla = pravidla
+        return puvodni
 
     def copy(self)->'TrojuhelnikovyResic':
         novy = TrojuhelnikovyResic(self.pravidla)
@@ -27,6 +35,7 @@ class TrojuhelnikovyResic:
         novy.promene = deepcopy(self.promene)
         return novy
     
+
     def set(self, promena, poradi, hodnota):
         self.promene[promena][poradi] = hodnota
     def get(self, promena, poradi):
@@ -109,6 +118,7 @@ class TrojuhelnikovyResic:
             
         return True
     
+
     def zkontroluj_uplnost(self) -> bool:
         for promena in self.pravidla.povolene:
             if not promena.startswith("__") and not self.je_vyreseno(self.promene[promena]):      #__condition ignorováno

@@ -1,4 +1,5 @@
 from resic import TrojuhelnikovyResic, State
+from rule import Rule
 
 class Runner:
     def __init__(self, resic : TrojuhelnikovyResic):
@@ -10,13 +11,22 @@ class Runner:
         resic.run(self, self.id)
         self.id += 1
 
-    def run(self):
-        self.spust_resic(self.resice[0])
+    def run(self, ban : Rule = None):
+        #zpracování banů
+        rs = self.resice[0]
+        if ban:
+            zaloha = rs.reset(ban)
+            rs.run(None, "ban")     #větvení je zakázáno
+            if rs.stav == State.Failure:
+                self.stav = State.Ban
+                self.vysledky = []
+                return
+            rs.reset(zaloha)
 
-        #for resic in self.resice:
-        #    print(resic.stav)
-        #    print(resic.promene)
-        
+
+        #vlastní výpočet
+        self.spust_resic(rs)
+
 
         #odstranění chybných výsledků
         self.vysledky = [resic for resic in self.resice if resic.stav == State.Success]
@@ -31,7 +41,6 @@ class Runner:
             if resic.stav == State.Unsolved:
                 self.stav = State.Unsolved
 
-        #print(self.stav)
 
 
     def duplicate(self, spoustec : TrojuhelnikovyResic, vysledek, poradi, moznosti : tuple):

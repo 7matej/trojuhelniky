@@ -1,4 +1,5 @@
 from pravidla import rs
+from ban import ban
 from resic import TrojuhelnikovyResic, State
 from runner import Runner
 
@@ -59,8 +60,9 @@ class Formular:
             self.hlaska = "Můsíte vyplnit právě tři prvky trojúhelníku."
             return
         
+
         runner = Runner(resic)
-        runner.run()
+        runner.run(ban)
 
         self.vysledky = runner.vysledky
 
@@ -71,6 +73,9 @@ class Formular:
             
             case State.Failure:
                 self.hlaska = "Trojúhelník se zadanými prvky neexistuje."
+
+            case State.Ban:
+                self.hlaska = "Zadaná kombinace známých prvků není povolená."
             
             case State.Success:
                 self.pocet_reseni = len(self.vysledky)

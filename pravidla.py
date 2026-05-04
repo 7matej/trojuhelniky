@@ -2,11 +2,12 @@ from rule import Rule
 from mmath import *
 from pprint import pprint
 
-rs = Rule(set((
+promene = set((
     "strana",    #strana
     "uhel",    #úhel
     "r"    #poloměr kružnice opsané
-)))
+))
+rs = Rule(promene)
 
 
 #podmínky

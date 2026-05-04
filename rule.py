@@ -11,6 +11,9 @@ class Rule:
     def cond(self, *parametry):
         return self.rule("__condition", *parametry)
     
+    def ban(self, *parametry):
+        self.cond(*parametry)(lambda *args: False)
+    
     
     def rule(self, vysledek, *parametry):
         args=parametry
