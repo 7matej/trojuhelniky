@@ -3,6 +3,8 @@ from itertools import batched
 from enum import Enum
 from copy import deepcopy
 
+from rule import Rule
+
 class SolverError(Exception):
     pass
 
@@ -12,19 +14,15 @@ class State(Enum):
     Unknown = 2
     Unsolved = 3
 
-class TrojuhelnikovyResic:
-    povolene = {"__condition"}
-    pravidla = []
-    
-    def __init__(self, povolene_promene = None):
-        if povolene_promene:
-            self.povolene.update(povolene_promene)
+class TrojuhelnikovyResic:    
+    def __init__(self, pravidla : Rule):
+        self.pravidla = pravidla
         self.stav = State.Unknown
         self.promene=defaultdict(lambda:[None, None, None])
 
 
     def copy(self)->'TrojuhelnikovyResic':
-        novy = TrojuhelnikovyResic(self.povolene)
+        novy = TrojuhelnikovyResic(self.pravidla)
         novy.stav = self.stav
         novy.promene = deepcopy(self.promene)
         return novy
@@ -33,30 +31,6 @@ class TrojuhelnikovyResic:
         self.promene[promena][poradi] = hodnota
     def get(self, promena, poradi):
         return self.promene[promena][poradi]
-
-
-    def rule(self, vysledek, *parametry):
-        args=parametry
-
-        if len(args) % 2 != 0:
-            raise ValueError("počet parametrů metody rule musí být lichý")
-        
-        if vysledek not in self.povolene:
-            raise ValueError(f"Zadaný výsledek výpočtu '{vysledek}' není mezi povolenými parametry")
-        
-        for parametr, poradi in batched(args, 2):
-            if not parametr in self.povolene:
-                raise ValueError(f"Parametr '{parametr}' není mezi povolenými parametry")
-            if poradi not in (0,1,2):
-                raise ValueError(f"Číslo následující po názvu parametru musí být v rozmezí 0-2")
-            
-        def dekorator(func):
-            self.pravidla.append((func, vysledek, args))
-            return func
-        return dekorator
-    
-    def cond(self, *parametry):
-        return self.rule("__condition", *parametry)
 
 
     def run(self, runner, id):
@@ -77,7 +51,7 @@ class TrojuhelnikovyResic:
         del self.promene["__condition"]
 
     def spust_pravidla(self):
-        for func, vysledek, args in self.pravidla:
+        for func, vysledek, args in self.pravidla.lst:
             
             for i in range(0, 3):
                 if self.promene[vysledek][i] is None:
@@ -136,7 +110,7 @@ class TrojuhelnikovyResic:
         return True
     
     def zkontroluj_uplnost(self) -> bool:
-        for promena in self.povolene:
+        for promena in self.pravidla.povolene:
             if not promena.startswith("__") and not self.je_vyreseno(self.promene[promena]):      #__condition ignorováno
                 return False
         return True

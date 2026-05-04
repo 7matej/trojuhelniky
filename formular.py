@@ -1,4 +1,4 @@
-import pravidla
+from pravidla import rs
 from resic import TrojuhelnikovyResic, State
 from runner import Runner
 
@@ -38,7 +38,7 @@ class Formular:
         self.pocet_reseni = 0
         self.hlaska = None
 
-        resic = TrojuhelnikovyResic()
+        resic = TrojuhelnikovyResic(rs)
         pocet = 0
 
         for pole in self.polozky:
