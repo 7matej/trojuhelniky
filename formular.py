@@ -35,13 +35,10 @@ class Formular:
         })
 
     def zpracuj_hodnoty(self, zdroj):
-        self.vysledky = []
-        self.pocet_reseni = 0
-        self.hlaska = None
 
         resic = TrojuhelnikovyResic(rs)
+        
         pocet = 0
-
         for pole in self.polozky:
             obsah = zdroj.get(pole["name"])
             
