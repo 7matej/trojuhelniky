@@ -7,7 +7,8 @@ def cos(alpha):
     return m.cos(m.radians(alpha))
 
 def asin(x):
-    return m.degrees(m.asin(x)) % 360
+    r1 = m.degrees(m.asin(x)) % 360
+    return r1, (180 - r1) % 360
 
 def acos(x):
     return m.degrees(m.acos(x)) % 360

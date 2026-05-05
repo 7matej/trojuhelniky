@@ -5,7 +5,7 @@ from pprint import pprint
 promene = set((
     "strana",    #strana
     "uhel",    #úhel
-    "r"    #poloměr kružnice opsané
+    "r",    #poloměr kružnice opsané
 ))
 rs = Rule(promene)
 
@@ -59,8 +59,7 @@ def sinova_veta1(alfa, r):
 
 @rs.rule("uhel", "strana", 0, "r", 0)
 def sinova_veta2(a, r):
-    alfa = asin(a/(2*r))
-    return alfa, (180 - alfa) % 360
+    return asin(a/(2*r))
 
 @rs.rule("r", "strana", 0, "uhel", 0)
 def sinova_veta3(a, alfa):
