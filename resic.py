@@ -68,18 +68,28 @@ class TrojuhelnikovyResic:
                     or self.spust_pravidlo(func, vysledek, args, i, -1):
                         return True
         return False
-                            
+    
+
+
+
+    def nacti_argumenty(self, args, vysledek_poradi, smer):
+        arglist = []
+        for promena, poradi in batched(args, 2):
+            hodnota = self.promene[promena][(vysledek_poradi + poradi*smer) % 3]
+            if hodnota is None:
+                return None
+            arglist.append(hodnota)
+        
+        return arglist          
+
 
     def spust_pravidlo(self, func, vysledek, args, vysledek_poradi, smer):
         #vrátí True, pokud se pravidlo spustilo a nejde o podmínku
         
         #načte argumenty
-        arglist = []
-        for promena, poradi in batched(args, 2):
-            hodnota = self.promene[promena][(vysledek_poradi + poradi*smer) % 3]
-            if hodnota is None:
-                return False
-            arglist.append(hodnota)
+        arglist = self.nacti_argumenty(args, vysledek_poradi, smer)
+        if arglist is None:
+            return False
 
         
         #spustí pravidlo
@@ -98,7 +108,7 @@ class TrojuhelnikovyResic:
             print("")
             print("---------------------ERROR-------------------------------")
             print(f"Řešič id={self.id}")
-            print(f"Funkce '{func.__name__}' při výpočtu proměnné '{vysledek}' - '{poradi}':")
+            print(f"Funkce '{func.__name__}' při výpočtu proměnné '{vysledek}' - '{vysledek_poradi}':")
             print(repr(e))
             print("Stav proměnných v době chyby:")
             print(repr(self.promene))
@@ -118,6 +128,29 @@ class TrojuhelnikovyResic:
             
         return True
     
+
+        
+    def test(self):
+        #zkontroluje konzistenci pravidel
+        for func, vysledek, args in self.pravidla.lst:
+            if vysledek == "__condition":
+                continue
+
+            for i in range(0, 3):
+                self.test_pravidlo(func, vysledek, args, i, 1)
+                self.test_pravidlo(func, vysledek, args, i, -1)
+
+    def test_pravidlo(self, func, vysledek, args, vysledek_poradi, smer):
+        zaloha = self.promene[vysledek][vysledek_poradi]
+        self.promene[vysledek][vysledek_poradi] = None
+
+        hodnota = func(*self.nacti_argumenty(args, vysledek_poradi, smer))
+
+        zkontroluj(hodnota, zaloha)
+        self.promene[vysledek][vysledek_poradi] = zaloha
+
+
+
 
     def zkontroluj_uplnost(self) -> bool:
         for promena in self.pravidla.povolene:
@@ -147,5 +180,20 @@ def je_cislo(x):
     
     return isinstance(x, (int, float))
 
+
 def odstran_duplicity(puvodni : tuple):
     return tuple(set(puvodni))
+
+
+def zkontroluj(vysledek, puvodni):
+    tolerance = 0.01
+
+    if isinstance(vysledek, tuple):
+        for x in vysledek:
+            if abs(x - puvodni) < tolerance:
+                break
+        else:
+            raise AssertionError
+    
+    else:
+        assert(abs(vysledek - puvodni) < tolerance)
