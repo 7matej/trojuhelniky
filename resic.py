@@ -16,10 +16,11 @@ class State(Enum):
     Ban = 4
 
 class TrojuhelnikovyResic:    
-    def __init__(self, pravidla : Rule):
+    def __init__(self, pravidla : Rule, print_error = True):
         self.pravidla = pravidla
         self.stav = State.Unknown
         self.promene=defaultdict(lambda:[None, None, None])
+        self.print_error = print_error
 
     def reset(self, pravidla : Rule = None) -> Rule:
         #! zachovává proměnné, vrací původní pravidla
@@ -30,7 +31,7 @@ class TrojuhelnikovyResic:
         return puvodni
 
     def copy(self)->'TrojuhelnikovyResic':
-        novy = TrojuhelnikovyResic(self.pravidla)
+        novy = TrojuhelnikovyResic(self.pravidla, self.print_error)
         novy.stav = self.stav
         novy.promene = deepcopy(self.promene)
         return novy
@@ -105,15 +106,16 @@ class TrojuhelnikovyResic:
                                   " nebo neprázdná n-tice čísel.")
         
         except Exception as e:
-            print("")
-            print("---------------------ERROR-------------------------------")
-            print(f"Řešič id={self.id}")
-            print(f"Funkce '{func.__name__}' při výpočtu proměnné '{vysledek}' - '{vysledek_poradi}':")
-            print(repr(e))
-            print("Stav proměnných v době chyby:")
-            print(repr(self.promene))
-            print("---------------------------------------------------------")
-            print("")
+            if self.print_error:
+                print("")
+                print("---------------------ERROR-------------------------------")
+                print(f"Řešič id={self.id}")
+                print(f"Funkce '{func.__name__}' při výpočtu proměnné '{vysledek}' - '{vysledek_poradi}':")
+                print(repr(e))
+                print("Stav proměnných v době chyby:")
+                print(repr(self.promene))
+                print("---------------------------------------------------------")
+                print("")
             self.stav = State.Failure
         else:
             if vysledek != "__condition":
