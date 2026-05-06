@@ -30,7 +30,8 @@ formular = Formular(
     "strana" : ("a", "b", "c"),
     "uhel" : ("α", "β", "γ"),
     "r" : "r",
-    "S" : "S"
+    "S" : "S",
+    "h" : ("ha", "hb", "hc"),
 }
 )
 statistiky = Counter()
@@ -42,7 +43,8 @@ for trojice in combinations(formular.polozky, 3):
         runner = Runner(resic)
         
         for pole in trojice:
-            resic.set(pole["promena"], pole["pozice"], uniform(20, 70))
+            hodnota =  uniform(20, 70) if pole["nazev"] != "S" else uniform(20**2/2, 70**2/2)
+            resic.set(pole["promena"], pole["pozice"], hodnota)
         
         #spuštění výpočtu
         runner.run(ban)
