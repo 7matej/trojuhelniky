@@ -1,3 +1,22 @@
-form label {
+form {
+    display: grid;
+    grid-template-columns: minmax(auto, 30rem) 5rem;
+    gap: 3rem;
+    padding-bottom: 1rem;
+}
+
+.tabulka {
+    display: grid;
+    grid-template-columns: 3rem 1fr;
+    gap: 0.2rem;
+}
+
+.tabulka label {
     text-align: right;
+}
+
+.submit {
+    margin-top: auto;
+    margin-bottom: 0;
+
 }

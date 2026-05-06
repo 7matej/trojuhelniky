@@ -11,12 +11,14 @@
     <p>Zadejte tři prvky trojúhelníku a spusťte výpočet:</p>
 
     <form method="post">
-        {% for pole in formular.polozky %}
-            <label for="{{ pole.name }}">{{ pole.nazev + ":" }}</label>
-            <input type="number" step="any"
-             name="{{ pole.name }}" id="{{ pole.name }}" value="{{ pole.hodnota }}"><br>
-        {% endfor %}
-        <input type="submit" value="vypočítat">
+        <div class="tabulka">
+            {% for pole in formular.polozky %}
+                <label for="{{ pole.name }}">{{ pole.nazev + ":" }}</label>
+                <input type="number" step="any" class="vstupni-pole" 
+                name="{{ pole.name }}" id="{{ pole.name }}" value="{{ pole.hodnota }}">
+            {% endfor %}
+        </div>
+        <input type="submit" value="vypočítat" class="submit">
     </form>
 
     {% if formular.hlaska %}
