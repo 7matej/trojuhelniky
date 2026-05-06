@@ -104,7 +104,7 @@ def podobnost(S, alfa, beta, gama):
 
 
 
-#nejednoznačná pravidla - musí být nakonci, jinak působí chyby!
+#nejednoznačná pravidla - musí být na konci, jinak působí chyby!
 @rs.rule("uhel", "strana", 0, "r", 0)
 def sinova_veta3(a, r):
     return asin(a/(2*r))
