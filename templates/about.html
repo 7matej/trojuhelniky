@@ -1,0 +1,32 @@
+{% extends "layout.html" %}
+
+{% block title %}About{% endblock %}
+
+{% block nadpis %}O kalkulačce{% endblock %}
+
+{% block obsah %}
+    <p class="lead mb-4">
+        Tato kalkulačka umí (s určitými výjimkami jako například tři úhly) vypočítat zbývající prvky
+         trojúhelníka, pokud tři zadáte. Pracuje s délkami stran, vnitřními úhly, výškami, obsahem a poloměrem
+         kružnice opsané trojúhelníku.
+    </p>
+    <p class="lead mb-4">
+        V případech, které mají více řešení je kalkulačka najde všechna. V některých případech mohou existovat 
+        dokonce čtyři řešení. Naopak pro určité kombinace zadaných hodnot neexistuje žádné řešení.
+    </p>
+    <p class="lead mb-4">
+        Jak to celé funguje?
+        Kalkulačka využívá různé geometrické vztahy jako například součet úhlů v trojúhelníku, 
+        rozšířenou sinovou větu, kosinovou větu, vzorce pro obsah trojúhelníku, v některých případech 
+        si vypomáhá podobností trojúhelníků, soustavami rovnic. Nejobtížnější je úloha, kdy jsou známy dvě
+        výšky a poloměr kružnice opsané, která vede na rovnici čtvrtého stupně řešenou numericky.
+    </p>
+    <p class="lead mb-4">
+        Kliknutím <a href=".">sem</a> vstoupíte do kalkulačky.
+    </p>
+{% endblock %}
+
+
+{% block karty %}
+
+{% endblock %}

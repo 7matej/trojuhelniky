@@ -5,7 +5,10 @@
 {% block nadpis %}Kalkulačka trojúhelníků{% endblock %}
 
 {% block obsah %}
-    <p class="lead mb-4">Zadejte libovolné tři prvky trojúhelníku a zobrazím zbývající rozměry a úhly.</p>
+    <p class="lead mb-4">
+        Zadejte libovolné tři prvky trojúhelníku a zobrazím zbývající rozměry a úhly.
+        Více informací naleznete <a href="about">zde</a>.
+    </p>
     <form method="post" class="row g-3">
         {% for pole in formular.polozky %}
             <div class="col-md-6">
