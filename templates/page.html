@@ -41,7 +41,7 @@
                                                 <span class="result-label">{{ pole.nazev | safe }}</span>
                                                 <span class="result-value-wrap">
                                                     <span class="result-value" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ resic.get(pole.promena, pole.pozice) }}">{{ '%.2f'|format(resic.get(pole.promena, pole.pozice) | float) }}</span>
-                                                    <button type="button" class="copy-btn" data-full-value="{{ resic.get(pole.promena, pole.pozice) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Kopírovat přesnou hodnotu">⎘</button>
+                                                    <button type="button" class="copy-btn" data-full-value="{{ resic.get(pole.promena, pole.pozice) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Kopírovat přesnou hodnotu">C</button>
                                                 </span>
                                             </div>
                                         </div>
