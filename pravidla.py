@@ -35,6 +35,10 @@ rs.cond("S", 0)
 def podm5(S):
     return S > 0
 
+rs.cond("h", 0)
+def podm6(h):
+    return h > 0
+
 
 
 #součet úhlů v trojúhelníku
