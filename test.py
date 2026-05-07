@@ -36,6 +36,7 @@ formular = Formular(
 }
 )
 statistiky = Counter()
+pocty_reseni = Counter()
 
 for trojice in combinations(formular.polozky, 3):
 
@@ -51,6 +52,9 @@ for trojice in combinations(formular.polozky, 3):
         runner.run(ban)
 
         statistiky[runner.stav] += 1
+        pocty_reseni[len(runner.vysledky)] += 1
+        if len(runner.vysledky) > 2:
+            print(*(pole["nazev"] + " = " + str(resic.get(pole["promena"], pole["pozice"])) for pole in trojice), sep=", ")
         
         if runner.stav == State.Unsolved:
             print("Chyba:")
@@ -69,4 +73,5 @@ for trojice in combinations(formular.polozky, 3):
         print("Nepodařilo se najít existující trojúhelník.")
 
 print(statistiky)
+print(pocty_reseni)
 print("✅")
