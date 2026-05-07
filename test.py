@@ -19,6 +19,7 @@ runner = Runner(resic)
 runner.run()
 
 assert(runner.stav == State.Success)
+assert(len(runner.vysledky) == 1)
 
 for resic in runner.vysledky:
     resic.test()

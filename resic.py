@@ -144,7 +144,13 @@ class TrojuhelnikovyResic:
 
     def test_pravidlo(self, func, vysledek, args, vysledek_poradi, smer):
         zaloha = self.promene[vysledek][vysledek_poradi]
+
+        #pokus
+        #if abs(zaloha - 90) < 1 and vysledek == "uhel":
+        #    return
+
         self.promene[vysledek][vysledek_poradi] = None
+
 
         hodnota = func(*self.nacti_argumenty(args, vysledek_poradi, smer))
 

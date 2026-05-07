@@ -7,6 +7,7 @@ promene = set((
     "uhel",    #úhel
     "r",    #poloměr kružnice opsané
     "S",    #obsah
+    "h",    #výška
 ))
 rs = Rule(promene)
 
@@ -103,6 +104,27 @@ def podobnost(S, alfa, beta, gama):
     return a0 * sqrt(S / S0)
 
 
+#výšky
+@rs.rule("strana", "S", 0, "h", 0)
+@rs.rule("h", "S", 0, "strana", 0)
+def vyska_obsah1(S, x):
+    return 2*S / x
+
+@rs.rule("S", "strana", 0, "h", 0)
+def vyska_obsah2(a, h):
+    return 1/2 * a*h
+
+
+@rs.rule("h", "strana", 1, "uhel", 2)
+def vyska1(b, gama):
+    return b*sin(gama)
+
+@rs.rule("strana", "h", 1, "uhel", 2)
+def vyska2(hb, gama):
+    return hb / sin(gama)
+
+
+
 
 #nejednoznačná pravidla - musí být na konci, jinak působí chyby!
 @rs.rule("uhel", "strana", 0, "r", 0)
@@ -112,6 +134,27 @@ def sinova_veta3(a, r):
 @rs.rule("uhel", "S", 0, "strana", 1, "strana", 2)
 def obsah3(S, b, c):
     return asin(2*S / (b * c))
+
+@rs.rule("uhel", "h", 1, "strana", 2)
+def vyska3(hb, c):
+    return asin(hb/c)
+
+
+@rs.rule("uhel", "r", 0, "h", 1, "h", 2)
+def problemaricky_pripad(r, ha, hb):                #nepodařilo se mi najít analytické řešení
+    def rovnice(x):     
+        #vyjadřuje rovnici pro sin(alfa)**2
+        
+        return (4*r**2*x**2 - ha**2 - hb**2)**2/(4*ha**2 * hb**2) - (1-x)
+    
+    vysledky = []
+    for x in separuj_koreny(0, 1, rovnice):
+        u1, u2 = (asin(sqrt(x)))
+        vysledky.append(u1)
+        vysledky.append(u2)
+    
+    return tuple(vysledky)
+
 
 
 #if __name__ == "__main__":

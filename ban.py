@@ -15,3 +15,5 @@ def obsah(S):
 
 ban.ban("uhel", 0, "uhel", 1, "uhel", 2)
 ban.ban("r", 0, "strana", 0, "uhel", 0)
+ban.ban("h", 0, "strana", 1, "uhel", 2)
+ban.ban("h", 0, "S", 0, "strana", 0)
