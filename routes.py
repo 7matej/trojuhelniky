@@ -13,7 +13,8 @@ def kalkulacka_trojuhelniku():
         "strana" : ("a", "b", "c"),
         "uhel" : ("α", "β", "γ"),
         "r" : "r",
-        "S" : "S"
+        "S" : "S",
+        "h" : ("h<sub>a</sub>", "h<sub>b</sub>", "h<sub>c</sub>"),
     }
     )
     if request.method == "POST":

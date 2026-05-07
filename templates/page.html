@@ -13,7 +13,7 @@
     <form method="post">
         <div class="tabulka">
             {% for pole in formular.polozky %}
-                <label for="{{ pole.name }}">{{ pole.nazev + ":" }}</label>
+                <label for="{{ pole.name }}">{{ pole.nazev | safe}}:</label>
                 <input type="number" step="any" class="vstupni-pole" 
                 name="{{ pole.name }}" id="{{ pole.name }}" value="{{ pole.hodnota }}">
             {% endfor %}
@@ -29,7 +29,7 @@
         <hr>
         {% for pole in formular.polozky %}
             <p>
-                <strong>{{ pole.nazev }}:</strong> {{ resic.get(pole.promena, pole.pozice) }}
+                <strong>{{ pole.nazev | safe}}:</strong> {{ resic.get(pole.promena, pole.pozice) }}
             </p>
         {% endfor %}  
     {% endfor %}
