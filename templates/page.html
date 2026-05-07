@@ -3,31 +3,56 @@
 {% block title %}Kalkulačka trojúhelníků{% endblock %}
 
 {% block obsah %}
-	<h1>Kalkulačka trojúhelníků</h1>
-    <p>Zadejte tři prvky trojúhelníku a spusťte výpočet:</p>
+<div class="container py-5">
+    <div class="row justify-content-center">
+        <div class="col-xl-8 col-lg-10">
+            <div class="card shadow-sm spring-card p-4 mb-4 border-0">
+                <div class="card-body">
+                    <h1 class="display-6 mb-3">Kalkulačka trojúhelníků</h1>
+                    <p class="lead mb-4">Zadejte libovolné tři prvky trojúhelníku a zobrazím zbývající rozměry a úhly.</p>
+                    <form method="post" class="row g-3">
+                        {% for pole in formular.polozky %}
+                            <div class="col-md-6">
+                                <label for="{{ pole.name }}" class="form-label">{{ pole.nazev | safe }}</label>
+                                <input type="number" step="any" class="form-control form-control-lg" name="{{ pole.name }}" id="{{ pole.name }}" value="{{ pole.hodnota }}">
+                            </div>
+                        {% endfor %}
+                        <div class="col-12 text-end">
+                            <button type="submit" class="btn btn-primary btn-lg px-5">Vypočítat</button>
+                        </div>
+                    </form>
 
-    <form method="post">
-        <div class="tabulka">
-            {% for pole in formular.polozky %}
-                <label for="{{ pole.name }}">{{ pole.nazev | safe}}:</label>
-                <input type="number" step="any" class="vstupni-pole" 
-                name="{{ pole.name }}" id="{{ pole.name }}" value="{{ pole.hodnota }}">
-            {% endfor %}
+                    {% if formular.hlaska %}
+                        <div class="alert alert-warning mt-4 mb-0" role="alert">{{ formular.hlaska }}</div>
+                    {% endif %}
+                </div>
+            </div>
+
+            {% if formular.vysledky %}
+                <div class="results">
+                    {% for resic in formular.vysledky %}
+                        <div class="card shadow-sm result-card p-3 mb-3 border-0">
+                            <div class="card-body">
+                                <h2 class="h5 mb-3">Nalezené řešení</h2>
+                                <div class="row gx-3 gy-2">
+                                    {% for pole in formular.polozky %}
+                                        <div class="col-sm-6">
+                                            <div class="result-item">
+                                                <span class="result-label">{{ pole.nazev | safe }}</span>
+                                                <span class="result-value-wrap">
+                                                    <span class="result-value" data-bs-toggle="tooltip" data-bs-placement="top" title="{{ resic.get(pole.promena, pole.pozice) }}">{{ '%.2f'|format(resic.get(pole.promena, pole.pozice) | float) }}</span>
+                                                    <button type="button" class="copy-btn" data-full-value="{{ resic.get(pole.promena, pole.pozice) }}" data-bs-toggle="tooltip" data-bs-placement="top" title="Kopírovat přesnou hodnotu">⎘</button>
+                                                </span>
+                                            </div>
+                                        </div>
+                                    {% endfor %}
+                                </div>
+                            </div>
+                        </div>
+                    {% endfor %}
+                </div>
+            {% endif %}
         </div>
-        <input type="submit" value="vypočítat" class="submit">
-    </form>
-
-    {% if formular.hlaska %}
-        <p>{{ formular.hlaska }}</p>
-    {% endif %}
-
-    {% for resic in formular.vysledky %}
-        <hr>
-        {% for pole in formular.polozky %}
-            <p>
-                <strong>{{ pole.nazev | safe}}:</strong> {{ resic.get(pole.promena, pole.pozice) }}
-            </p>
-        {% endfor %}  
-    {% endfor %}
-
+    </div>
+</div>
 {% endblock %}
