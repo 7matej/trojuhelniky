@@ -1,12 +1,8 @@
-<!DOCTYPE html>
-<html lang="cs">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Kalkulačka trojúhelníků</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
-</head>
-<body>
+{% extends "layout.html" %}
+
+{% block title %}Kalkulačka trojúhelníků{% endblock %}
+
+{% block obsah %}
 	<h1>Kalkulačka trojúhelníků</h1>
     <p>Zadejte tři prvky trojúhelníku a spusťte výpočet:</p>
 
@@ -34,5 +30,4 @@
         {% endfor %}  
     {% endfor %}
 
-</body>
-</html>
+{% endblock %}
