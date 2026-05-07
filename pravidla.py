@@ -1,6 +1,8 @@
+import numpy as np
+
 from rule import Rule
 from mmath import *
-from pprint import pprint
+
 
 promene = set((
     "strana",    #strana
@@ -123,10 +125,23 @@ def vyska1(b, gama):
 def vyska2(hb, gama):
     return hb / sin(gama)
 
+@rs.rule("strana", "h", 0, "h", 1, "h", 2)
+def tri_vysky(ha, hb, hc):
+    #využití podobnosti
+    a0, b0, c0 = 10/ha, 10/hb, 10/hc
+    s0 = (a0+b0+c0) / 2
+
+    S0 = sqrt(s0*(s0-a0)*(s0-b0)*(s0-c0))           #Heronův vzorec
+    
+    ha0 = vyska_obsah1(S0, a0)
+
+    a = a0 * ha / ha0
+    return a
 
 
 
-#nejednoznačná pravidla - musí být na konci, jinak působí chyby!
+#nejednoznačná pravidla, vracejí více řešení, z nichž ne všechna jsou vždy skutečná
+#musí být na konci, jinak působí chyby!
 @rs.rule("uhel", "strana", 0, "r", 0)
 def sinova_veta3(a, r):
     return asin(a/(2*r))
@@ -142,16 +157,36 @@ def vyska3(hb, c):
 
 @rs.rule("uhel", "r", 0, "h", 1, "h", 2)
 def problemaricky_pripad(r, ha, hb):                #nepodařilo se mi najít analytické řešení
-    def rovnice(x):     
-        #vyjadřuje rovnici pro sin(alfa)**2
-        
-        return (4*r**2*x**2 - ha**2 - hb**2)**2/(4*ha**2 * hb**2) - (1-x)
+    #numerické řešení (4*r**2*x**2 - ha**2 - hb**2)**2/(4*ha**2 * hb**2) - (1-x) == 0 pomocí knihovny numpy
+    #následující kód byl generován AI
+    # 1. Definice pomocných konstant
+    C = ha**2 + hb**2
+    D = 4 * ha**2 * hb**2
+    
+    # 2. Výpočet koeficientů polynomu (od nejvyšší mocniny x^4 po x^0)
+    a = (16 * r**4) / D
+    b = 0
+    c = -(8 * r**2 * C) / D
+    d = 1
+    e = (C**2) / D - 1
+    
+    # 3. Nalezení všech (i komplexních) kořenů polynomu
+    all_roots = np.roots([a, b, c, d, e])
+    
+    # 4. Filtrace - chceme pouze reálné kořeny (imaginární část je nulová)
+    # Používáme np.isclose kvůli možným drobným nepřesnostem ve float aritmetice
+    real_roots = all_roots[np.isclose(all_roots.imag, 0)].real
+    
+    # 5. Filtrace - chceme pouze kořeny v intervalu <0, 1>
+    valid_roots = [x for x in real_roots if 0 <= x <= 1]
     
     vysledky = []
-    for x in separuj_koreny(0, 1, rovnice):
+    for x in valid_roots:
         u1, u2 = (asin(sqrt(x)))
-        vysledky.append(u1)
-        vysledky.append(u2)
+        if 4*r**2*x**2 - ha**2 - hb**2 < 0:
+            vysledky.append(u1)
+        else:
+            vysledky.append(u2)
     
     return tuple(vysledky)
 
