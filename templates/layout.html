@@ -8,7 +8,25 @@
     <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}">
 </head>
 <body class="bg-linen text-dark">
-    {% block obsah %} {% endblock %}
+    <div class="container py-5">
+        <div class="row justify-content-center">
+            <div class="col-xl-8 col-lg-10">
+                <div class="card shadow-sm spring-card p-4 mb-4 border-0">
+                    <div class="card-body">
+                        <h1 class="display-6 mb-3">{% block nadpis %} {% endblock %}</h1>
+                        {% block obsah %}
+                        
+                        {% endblock %}
+                    </div>
+                </div>
+                {% block karty %}
+
+                {% endblock %}
+                
+            </div>
+        </div>
+    </div>
+
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/js/bootstrap.bundle.min.js"></script>
     <script>
